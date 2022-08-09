@@ -1,12 +1,13 @@
 import './App.css';
 import TimeZoneComponent from "./components/TimeZoneComponent";
 
-const colors = ['#cee9e7', '#ffefe7', '#f8d0cd', '#f0def0', '#cfe4f5', '#e5eaec']
 
 function App() {
 
   return (
-    <div className="App">
+    <div className={`flex space-x-20 p-10`}>
+        <TimeZoneComponent/>
+        <TimeZoneComponent/>
         <TimeZoneComponent/>
     </div>
   );
