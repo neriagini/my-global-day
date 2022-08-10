@@ -16,6 +16,7 @@ interface Item {
     content: string;
 }
 
+// move to App.tsx
 
 // a little function to help us with reordering the result
 const reorder = (
