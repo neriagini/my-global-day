@@ -1,0 +1,67 @@
+import './App.css';
+import TimeZoneComponent from "./components/TimeZoneComponent";
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import {useState} from "react";
+
+const timeZones: string[] = ["Asia/Jerusalem", "America/New_York","Europe/Berlin" ]
+
+const reorder = (list: any, startIndex: number, endIndex: number) :any => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+};
+
+function App() {
+
+    const [timezones, setTimezones] = useState(timeZones)
+
+    const onDragEnd = (result:any) => {
+        if (!result.destination) return;
+        if (result.destination.index === result.source.index) return;
+        const tzs = reorder(
+            timezones,
+            result.source.index,
+            result.destination.index
+        );
+        //store reordered state.
+        setTimezones(tzs)
+    }
+
+    return (
+       <DragDropContext onDragEnd={onDragEnd}>
+           <Droppable droppableId="list" direction={'horizontal'}>
+               {provided => (
+                   <div
+                       ref={provided.innerRef}
+                       {...provided.droppableProps}
+                       className={`flex bg-stone-300`}
+                   >
+                       {
+                          timezones.map((timeZone:string, index:number) => {
+                               return(
+                                   <Draggable draggableId={timeZone} key={index} index={index}>
+                                       {(provided) => (
+                                           <div
+                                               ref={provided.innerRef}
+                                               {...provided.draggableProps}
+                                               {...provided.dragHandleProps}
+                                               className={`m-5`}
+                                           >
+                                               {/*<TimeZoneComponent timeZone={timeZone} />*/}
+                                               <p> {timeZone} </p>
+                                           </div>
+                                       )}
+                                   </Draggable>
+                               )
+                           })
+                       }
+                       {provided.placeholder}
+                   </div>
+               )}
+           </Droppable>
+       </DragDropContext>
+  );
+}
+
+export default App;
