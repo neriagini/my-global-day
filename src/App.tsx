@@ -118,7 +118,8 @@ export default function App(): JSX.Element  {
                                             provided.draggableProps.style
                                         )}
                                     >
-                                        <div onClick={() => moveItem(index)}>
+                                        <div>
+                                            <button onClick={() => moveItem(index)}> Click to move right </button>
                                             <TimeZoneComponent timeZone={item.content} />
                                         </div>
                                     </div>

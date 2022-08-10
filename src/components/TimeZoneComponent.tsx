@@ -7,7 +7,7 @@ import Weather from "./Weather";
 export default function TimeZoneComponent({timeZone}: {timeZone:string}) {
     return(
         <div className={`flex flex-col`}>
-            <Time />
+            <Time timeZone={timeZone} />
             <Agenda events={events}/>
             <Weather />
         </div>
