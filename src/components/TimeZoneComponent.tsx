@@ -4,7 +4,7 @@ import Time from "./Time";
 import Weather from "./Weather";
 
 
-export default function TimeZoneComponent() {
+export default function TimeZoneComponent({timeZone}: {timeZone:string}) {
     return(
         <div className={`flex flex-col`}>
             <Time />
