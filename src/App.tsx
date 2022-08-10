@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import {useState} from "react";
+import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
 import './index.css';
 import {
     DragDropContext,
@@ -98,6 +99,8 @@ export default function App(): JSX.Element  {
     // Normally you would want to split things out into separate components.
     // But in this example everything is just done in one place for simplicity
     return (
+        <ScrollSync>
+
         <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable" direction={'horizontal'}>
                 {(provided, snapshot): JSX.Element => (
@@ -119,8 +122,8 @@ export default function App(): JSX.Element  {
                                         )}
                                     >
                                         <div>
-                                            <button onClick={() => moveItem(index)}> Click to move right </button>
-                                            <TimeZoneComponent timeZone={item.content} />
+                                            <button onClick={() => moveItem(index)} className={`font-bold text-[30px]`}> {'>'} </button>
+                                            <TimeZoneComponent  timeZone={item.content} />
                                         </div>
                                     </div>
                                 )}
@@ -131,6 +134,8 @@ export default function App(): JSX.Element  {
                 )}
             </Droppable>
         </DragDropContext>
+        </ScrollSync>
+
     );
 };
 
