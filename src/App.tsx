@@ -75,6 +75,26 @@ export default function App(): JSX.Element  {
         setState(items);
     };
 
+    const moveItem = (index:number) => {
+        if (index === state.length -1) {
+            const items: Item[] = reorder(
+                state,
+                index,
+                0
+            );
+            setState(items);
+
+        }
+        else {
+            const items: Item[] = reorder(
+                state,
+                index,
+                index+1
+            );
+            setState(items);
+        }
+    }
+
     // Normally you would want to split things out into separate components.
     // But in this example everything is just done in one place for simplicity
     return (
@@ -98,7 +118,7 @@ export default function App(): JSX.Element  {
                                             provided.draggableProps.style
                                         )}
                                     >
-                                        <div>
+                                        <div onClick={() => moveItem(index)}>
                                             <TimeZoneComponent timeZone={item.content} />
                                         </div>
                                     </div>
