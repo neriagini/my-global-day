@@ -26,7 +26,6 @@ const reorder = (
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-
     return result;
 };
 
@@ -40,8 +39,6 @@ const getItemStyle = (
     userSelect: "none",
     //padding: grid * 2,
      margin: `0 ${grid}px 0 0`,
-    // fontWeight: 'bold',
-    // fontFamily:'sans-serif',
 
     // change background colour if dragging
     // background: isDragging ? "lightgreen" : "grey",
@@ -77,7 +74,6 @@ export default function App(): JSX.Element  {
             result.source.index,
             result.destination.index
         );
-
         setState(items);
     };
 
@@ -104,9 +100,8 @@ export default function App(): JSX.Element  {
                                             provided.draggableProps.style
                                         )}
                                     >
-                                        {/*{item.content}*/}
                                         <div>
-                                            <TimeZoneComponent timeZone={"AAA"} />
+                                            <TimeZoneComponent timeZone={item.content} />
                                         </div>
                                     </div>
                                 )}
