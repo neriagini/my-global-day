@@ -1,125 +1,25 @@
-import React, { useState } from "react";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import './index.css';
-import ReactDOM from "react-dom";
-import {
-    DragDropContext,
-    Draggable,
-    DraggingStyle,
-    Droppable,
-    DropResult,
-    NotDraggingStyle
-} from "react-beautiful-dnd";
-import TimeZoneComponent from "./components/TimeZoneComponent";
+import App from './App';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import reportWebVitals from './reportWebVitals';
 
-interface Item {
-    id: string;
-    content: string;
-}
+const root = ReactDOM.createRoot(
+    document.getElementById('root') as HTMLElement
+);
+root.render(
+    // <React.StrictMode>
+        <App />
+    // </React.StrictMode>
+);
 
-// move to App.tsx
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://cra.link/PWA
+serviceWorkerRegistration.unregister();
 
-// a little function to help us with reordering the result
-const reorder = (
-    list: Item[],
-    startIndex: number,
-    endIndex: number
-): Item[] => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-
-    return result;
-};
-
-const grid = 8;
-
-const getItemStyle = (
-    isDragging: boolean,
-    draggableStyle: DraggingStyle | NotDraggingStyle | undefined
-): React.CSSProperties => ({
-    // some basic styles to make the items look a bit nicer
-    userSelect: "none",
-    padding: grid * 2,
-    margin: `0 ${grid}px 0 0`,
-    // fontWeight: 'bold',
-    // fontFamily:'sans-serif',
-
-    // change background colour if dragging
-    // background: isDragging ? "lightgreen" : "grey",
-
-    // styles we need to apply on draggables
-    ...draggableStyle
-});
-
-const getListStyle = (isDraggingOver: boolean): React.CSSProperties => ({
-    // background: isDraggingOver ? "lightblue" : "lightgrey",
-    padding: grid,
-    display:'flex',
-});
-
-
-const timeZones: any[] = [
-    {id:"jerusalem", content:"Asia/Jerusalem"},
-    {id:"new_york", content: "America/New_York"},
-    {id:"berlin", content:"Europe/Berlin"}
-]
-const App = (): JSX.Element => {
-
-    const [state, setState] = useState(timeZones)
-
-    const onDragEnd = (result: DropResult): void => {
-        // dropped outside the list
-        if (!result.destination) {
-            return;
-        }
-
-        const items: Item[] = reorder(
-            state,
-            result.source.index,
-            result.destination.index
-        );
-
-        setState(items);
-    };
-
-    // Normally you would want to split things out into separate components.
-    // But in this example everything is just done in one place for simplicity
-    return (
-        <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="droppable" direction={'horizontal'}>
-                {(provided, snapshot): JSX.Element => (
-                    <div
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        style={getListStyle(snapshot.isDraggingOver)}
-                    >
-                        {state.map((item, index) => (
-                            <Draggable key={item.id} draggableId={item.id} index={index}>
-                                {(provided, snapshot): JSX.Element => (
-                                    <div
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                        style={getItemStyle(
-                                            snapshot.isDragging,
-                                            provided.draggableProps.style
-                                        )}
-                                    >
-                                        {/*{item.content}*/}
-                                       <div>
-                                           <TimeZoneComponent timeZone={"AAA"} />
-                                       </div>
-                                    </div>
-                                )}
-                            </Draggable>
-                        ))}
-                        {provided.placeholder}
-                    </div>
-                )}
-            </Droppable>
-        </DragDropContext>
-    );
-};
-
-// Put the thing into the DOM!
-ReactDOM.render(<App />, document.getElementById("root"));
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
